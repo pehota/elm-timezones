@@ -2,12 +2,15 @@
   "extends": [
     "eslint:recommended", "prettier", "node"
   ],
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "jest"],
   "globals": {
     "expect" : false
   },
   "parserOptions": {
     "ecmaVersion": 6
+  },
+  "env": {
+    "jest/globals": true
   },
   "rules": {
     "prettier/prettier": [
