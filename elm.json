@@ -1,0 +1,18 @@
+{
+  "type": "package",
+  "name": "pehota/elm-timezones",
+  "summary": "Provide timezones information compatible with elm-lang/time package",
+  "license": "BSD-3-Clause",
+  "version": "0.0.1",
+  "elm-version": "0.18.0 <= v < 0.20.0",
+  "source-directories": [
+    "src",
+    "tools"
+  ],
+  "exposed-modules": [
+    "Timezones"
+  ],
+  "dependencies": {
+    "elm-lang/core": "5.1.1 <= v < 6.0.0"
+  }
+}
