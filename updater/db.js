@@ -51,7 +51,7 @@ const loadDB = shouldLoadDB =>
       tz.names().reduce((acc, name) => {
         const zone = tz.zone(name);
         if (!zone) {
-          console.warn(`Timezone ${name} does not exist`);
+          // console.warn(`Timezone ${name} does not exist`);
           return acc;
         }
         return [
