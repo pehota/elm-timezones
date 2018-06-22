@@ -14,7 +14,7 @@
     "eslint-plugin-jest": "^21.14.0",
     "eslint-plugin-prettier": "2.6.0",
     "jest": "^22.4.2",
-    "moment-timezone": "^0.5.14",
+    "moment-timezone": "^0.5.20",
     "prettier": "1.11.1"
   },
   "scripts": {
