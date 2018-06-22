@@ -6,6 +6,7 @@ const debug = val => {
   console.log('===> ', val);
   return val;
 };
+const fs = require('fs');
 
 const getType = val => {
   switch (true) {
@@ -43,17 +44,42 @@ const toElmValue = val => {
   }
 };
 
+const deleteFolderRecursive = path => {
+  if (fs.existsSync(path)) {
+    fs.readdirSync(path).forEach((file, index) => {
+      const curPath = path + '/' + file;
+      if (fs.lstatSync(curPath).isDirectory()) {
+        // recurse
+        deleteFolderRecursive(curPath);
+      } else {
+        // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+};
+
 const elmTZName = name => name.toLowerCase().replace(/\W+/g, '_');
 
 const writeZone = ({ name, eras }) =>
   `${elmTZName(name)} : Zone
 ${elmTZName(name)} =
-  Zone ${toElmValue(name)} ${toElmValue(eras)}`;
+  customZone ${toElmValue(name)} ${toElmValue(eras)}`;
+
+const cleanDestinationDirectory = () =>
+  new Promise((resolve, reject) => {
+    try {
+      deleteFolderRecursive(TIMEZONES_FILE_DIR);
+      resolve();
+    } catch (e) {
+      reject(`Could not clean the destination directory. Error: ${e}`);
+    }
+  });
 
 const openFileStream = () =>
   new Promise((resolve, reject) => {
     try {
-      const fs = require('fs');
       fs.mkdir(TIMEZONES_FILE_DIR, err => {
         if (err) reject(`Could not create file ${TIMEZONES_FILE_PATH}`);
         resolve(fs.createWriteStream(TIMEZONES_FILE_PATH));
@@ -95,7 +121,8 @@ const formatFile = () =>
   });
 
 const writeElm = tzInformation =>
-  openFileStream()
+  cleanDestinationDirectory()
+    .then(openFileStream)
     .then(writeModuleHeader)
     .then(writeModuleContents(tzInformation))
     .then(closeStream)

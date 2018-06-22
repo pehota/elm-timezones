@@ -54,6 +54,10 @@ const loadDB = shouldLoadDB =>
           // console.warn(`Timezone ${name} does not exist`);
           return acc;
         }
+        if (zone.name.indexOf('Cairo') > -1) {
+          console.log({ zone });
+          throw new Error('Test');
+        }
         return [
           ...acc,
           {
