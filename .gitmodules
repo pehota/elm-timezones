@@ -1,0 +1,3 @@
+[submodule "elm-timezones-updater"]
+	path = elm-timezones-updater
+	url = git@github.com:pehota/elm-timezones-updater.git
